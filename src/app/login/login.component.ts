@@ -8,7 +8,7 @@ import { HttpClient, HttpClientModule } from '@angular/common/http';
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [MatInputModule, MatFormFieldModule, MatButtonModule],
+  imports: [MatInputModule, MatFormFieldModule, MatButtonModule,HttpClientModule],
   templateUrl: './login.component.html',
   styleUrl: './login.component.scss',
 })
@@ -16,15 +16,19 @@ export class LoginComponent {
   constructor(private http: HttpClient) {}
   user: UserGetResponse[] = [];
   
+
+
   async findName(name: HTMLInputElement) {
     const url = 'http://localhost:3000/user';
     const data = await lastValueFrom(
+    
       this.http.get(url, {
         params: {
           name: name.value,
         },
       })
     );
+    console.log(data,"tses");
     this.user = data as UserGetResponse[];
     console.log(this.user);
   }
